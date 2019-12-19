@@ -1,0 +1,18 @@
+{
+  "name": "full-stack-todo",
+  "author": {
+    "name": "Bipin Swarnkar",
+    "email": "bipinswarnkar1989@gmail.com"
+  },
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "start": "lerna run start"
+  },
+  "devDependencies": {
+    "lerna": "^3.18.1"
+  }
+}
