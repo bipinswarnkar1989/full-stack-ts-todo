@@ -24,6 +24,6 @@ export const Main = styled.div`
    -webkit-align-items: center
 `;
 
-export const Title = styled.h2`
-   
+export const Title = styled('h2')<{color: string}>`
+   color: ${props => props.color}
 `;
