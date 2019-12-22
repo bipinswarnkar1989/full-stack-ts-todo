@@ -1,9 +1,13 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+
+import * as Styled from './styles';
 
 export const Todos: React.FC = () => {
     return (
-      <Fragment>
-          <h2>List Todos</h2>
-      </Fragment>
+      <Styled.Container>
+        <Styled.Main>
+        <Styled.Title>List Todos</Styled.Title>
+        </Styled.Main>
+      </Styled.Container>
     )
 }
