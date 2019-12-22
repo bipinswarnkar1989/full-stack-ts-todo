@@ -6,7 +6,7 @@ export const Todos: React.FC = () => {
     return (
       <Styled.Container>
         <Styled.Main>
-        <Styled.Title>List Todos</Styled.Title>
+        <Styled.Title color="#3D7E9A">List Todos</Styled.Title>
         </Styled.Main>
       </Styled.Container>
     )
