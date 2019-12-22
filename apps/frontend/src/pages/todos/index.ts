@@ -1,1 +1,1 @@
-export { Todos } from './todos';
+export { TodosContainer as Todos } from './todos.container';

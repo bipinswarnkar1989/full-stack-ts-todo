@@ -11,6 +11,8 @@ export const Container = styled.section`
 export const Main = styled.div`
    display: flex;
    flex-direction: column;
+   width: 100%;
+
    justify-content: center;
    -webkit-box-pack: center;
    -moz-box-pack: center;
@@ -26,4 +28,10 @@ export const Main = styled.div`
 
 export const Title = styled('h2')<{color: string}>`
    color: ${props => props.color}
+`;
+
+export const Todos = styled.div`
+   display: flex;
+   flex-direction: column;
+   
 `;
