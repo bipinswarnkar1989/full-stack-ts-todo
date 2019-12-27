@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 export const Container = styled.section`
    color: ${props => props.theme.color};
@@ -35,4 +36,14 @@ export const Todos = styled.div`
    flex-direction: column;
    width: 100%;
    padding: 10px;
+`;
+
+export const EditIcon = styled(FaEdit)`
+   cursor: pointer;
+   color: #008080;
+`;
+
+export const DeleteIcon = styled(FaTrash)`
+   cursor: pointer;
+   color: #AA2B2B;
 `;
