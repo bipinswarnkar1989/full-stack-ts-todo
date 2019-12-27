@@ -1,6 +1,16 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes, StyledProps } from 'styled-components';
 
 import { CommonTableStyles } from '../types';
+
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`
 
 export const baseStyle = css<CommonTableStyles>`
     margin-bottom: ${props => props.marginBottom ? props.marginBottom : '0'};
@@ -15,5 +25,6 @@ export const baseStyle = css<CommonTableStyles>`
 export const Table = styled.table`
    border-collapse: collapse;
    width: 99%;
+   animation: 1s ${fadeIn} ease-out;
    ${baseStyle}
 `;
