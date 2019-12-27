@@ -33,5 +33,6 @@ export const Title = styled('h2')<{color: string}>`
 export const Todos = styled.div`
    display: flex;
    flex-direction: column;
-   
+   width: 100%;
+   padding: 10px;
 `;
