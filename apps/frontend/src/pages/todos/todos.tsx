@@ -1,5 +1,4 @@
 import React from 'react';
-import { FaEdit, FaTrash } from 'react-icons/fa';
 
 import * as Styled from './styles';
 import { GetTodosQuery as GetTodosProps } from './todos.gql.generated';
