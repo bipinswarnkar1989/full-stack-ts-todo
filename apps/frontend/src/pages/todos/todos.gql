@@ -5,3 +5,11 @@ query getTodos {
       isComplete
     }
   }
+
+mutation deleteTodo($id: String!) {
+    deleteTodo(id: $id){
+       id
+       text
+       isComplete
+    }
+}

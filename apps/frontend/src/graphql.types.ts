@@ -49,12 +49,12 @@ export type Query = {
 
 
 export type QueryTodoArgs = {
-  id?: Maybe<Scalars['String']>
+  id: Scalars['String']
 };
 
 export type Todo = {
    __typename?: 'Todo',
-  id?: Maybe<Scalars['String']>,
-  text?: Maybe<Scalars['String']>,
-  isComplete?: Maybe<Scalars['Boolean']>,
+  id: Scalars['String'],
+  text: Scalars['String'],
+  isComplete: Scalars['Boolean'],
 };

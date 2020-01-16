@@ -49,14 +49,14 @@ export type Query = {
 };
 
 export type QueryTodoArgs = {
-  id: Maybe<Scalars["String"]>;
+  id: Scalars["String"];
 };
 
 export type Todo = {
   __typename?: "Todo";
-  id: Maybe<Scalars["String"]>;
-  text: Maybe<Scalars["String"]>;
-  isComplete: Maybe<Scalars["Boolean"]>;
+  id: Scalars["String"];
+  text: Scalars["String"];
+  isComplete: Scalars["Boolean"];
 };
 
 export type GetTodosQueryVariables = {};
@@ -68,6 +68,16 @@ export type GetTodosQuery = { __typename?: "Query" } & {
         { __typename?: "Todo" } & Pick<Types.Todo, "id" | "text" | "isComplete">
       >
     >
+  >;
+};
+
+export type DeleteTodoMutationVariables = {
+  id: Types.Scalars["String"];
+};
+
+export type DeleteTodoMutation = { __typename?: "Mutation" } & {
+  deleteTodo: Types.Maybe<
+    { __typename?: "Todo" } & Pick<Types.Todo, "id" | "text" | "isComplete">
   >;
 };
 
@@ -108,4 +118,39 @@ export type GetTodosQueryHookResult = ReturnType<typeof useGetTodosQuery>;
 export type GetTodosQueryResult = ApolloReactCommon.QueryResult<
   GetTodosQuery,
   GetTodosQueryVariables
+>;
+export const DeleteTodoDocument = gql`
+  mutation deleteTodo($id: String!) {
+    deleteTodo(id: $id) {
+      id
+      text
+      isComplete
+    }
+  }
+`;
+export type DeleteTodoMutationFn = ApolloReactCommon.MutationFunction<
+  DeleteTodoMutation,
+  DeleteTodoMutationVariables
+>;
+
+export function useDeleteTodoMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    DeleteTodoMutation,
+    DeleteTodoMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    DeleteTodoMutation,
+    DeleteTodoMutationVariables
+  >(DeleteTodoDocument, baseOptions);
+}
+export type DeleteTodoMutationHookResult = ReturnType<
+  typeof useDeleteTodoMutation
+>;
+export type DeleteTodoMutationResult = ApolloReactCommon.MutationResult<
+  DeleteTodoMutation
+>;
+export type DeleteTodoMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  DeleteTodoMutation,
+  DeleteTodoMutationVariables
 >;

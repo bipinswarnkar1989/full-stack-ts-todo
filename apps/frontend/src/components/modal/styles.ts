@@ -20,7 +20,9 @@ export const Wrapper = styled.div`
 
 export const Content = styled.div`
   position: relative;
-  width: 80%;
+  width: auto;
+  min-width: 50%;
+  max-width: 20%;
   z-index: 10;
   background: white;
   padding: 1px;  
@@ -42,13 +44,36 @@ export const Background = styled.div`
    opacity: 0.5;
 `;
 
+export const Header = styled.header`
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  background-color: green;
+`;
+
+export const HeaderLeft = styled.div`
+   text-align: left;
+   width: 100%;
+   padding-left: 10px;
+`;
+
+export const HeaderRight = styled.div`
+   width: 100%;
+   text-align: right;
+   padding-right: 10px;
+`;
+
 export const Title = styled.span`
    color: white;
    padding: 2px;
-   background-color: green;
    width: 100%;
    text-align: left;
    display: block;
+`;
+
+export const Close = styled.span`
+   cursor: pointer;
+   color: white;
 `;
 
 export const ModalBody = styled.div`
