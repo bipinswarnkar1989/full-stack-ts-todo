@@ -8,6 +8,10 @@ export const Wrapper = styled.div`
    height: 100%;
    background-color: rgb(0, 0, 0, 0.4);
    overflow: auto;
+   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
         ::-webkit-scrollbar {
             width: 0px !important;  /* Remove scrollbar space */
             background: transparent;  /* Optional: just make scrollbar invisible */
@@ -26,12 +30,8 @@ export const Content = styled.div`
   z-index: 10;
   background: white;
   padding: 1px;  
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  top: 10%;
+  
+  
 `;
 
 export const Background = styled.div`
