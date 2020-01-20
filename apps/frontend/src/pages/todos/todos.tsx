@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useApolloClient } from '@apollo/react-hooks';
 import * as Styled from './styles';
-import { GetTodosQuery as GetTodosProps, useDeleteTodoMutation, Todo, GetTodosDocument } from './todos.gql.generated';
+import { GetTodosQuery as GetTodosProps, useDeleteTodoMutation, Todo, GetTodosDocument, useEditTodoMutation } from './todos.gql.generated';
 import { Table, Thead, TBody, Tr, Td } from '../../components/table';
 import { Modal } from '../../components/modal';
-import { DeleteTodo } from './components';
+import { DeleteTodo, EditTodo } from './components';
 
 type TodoProps =  Todo;
 
@@ -12,17 +12,20 @@ const initialTodoTodel = {id: '', text: '', isComplete: false};
 
 export const Todos: React.FC<GetTodosProps> = ({ todos }) => {
     const [todoToDelete, setTodoToDelete] = useState<TodoProps>(initialTodoTodel);
-    const [delMessage, setDelMessage] = useState<string>('');
+    const [message, setmessage] = useState<string>('');
+    const [todoToEdit, setTodoToEdit] = useState<TodoProps>(initialTodoTodel);
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [modalTitle, setModalTitle] = useState<string>('');
+
     const client = useApolloClient();
 
     const [deleteTodoMutation] = useDeleteTodoMutation();
+    const [editTodoMutation] = useEditTodoMutation();
 
-    // const { deleteTodo } = useDeleteTodoMutation({
-    //   variables: { id: String(id) }
-    // });
-
-    const handleClick = (t: TodoProps ) => {
+    const handleDeleteClick = (t: TodoProps ) => {
+      setModalTitle('Delete Todo');
       setTodoToDelete(t);
+      setShowModal(t.id && t.id !== '' ? true : false);
     }
 
     const handleConfirmDelete = async () => {
@@ -37,9 +40,53 @@ export const Todos: React.FC<GetTodosProps> = ({ todos }) => {
           }
          });
          setTodoToDelete(initialTodoTodel);
-         setDelMessage('Todo Deleted Successfully');
+         setShowModal(false);
+         setmessage('Todo Deleted Successfully');
          setTimeout(()=> {
-          setDelMessage('');
+          setmessage('');
+         }, 8000);
+       }
+    }
+
+    const handleEditClick = (t: TodoProps ) => {
+      setModalTitle('Edit Todo');
+      setTodoToEdit(t);
+      setShowModal(t.id && t.id !== '' ? true : false);
+    }
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      let text = event.target.value;
+      let newTd = {
+        ...todoToEdit,
+        text
+      }
+      setTodoToEdit(newTd);
+    }
+
+    const handleEditSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+       event.preventDefault();
+       let id = todoToEdit.id;
+       let text = todoToEdit.text;
+       const { data } =   await editTodoMutation({ variables: { id, text } });
+       const { todos } =  await client.readQuery<any>({ query: GetTodosDocument });
+       console.log(data)
+       if (data && data.updateTodoText && data.updateTodoText.id && todos) {
+        client.writeQuery({
+          query: GetTodosDocument,
+          data: {
+             todos: todos.map((t:any) => {
+               if (t.id === data.updateTodoText?.id) {
+                  return data.updateTodoText;
+               }
+               return t;
+             })
+          }
+         });
+         setTodoToEdit(initialTodoTodel);
+         setShowModal(false);
+         setmessage('Todo Updated Successfully');
+         setTimeout(()=> {
+          setmessage('');
          }, 8000);
        }
     }
@@ -51,7 +98,7 @@ export const Todos: React.FC<GetTodosProps> = ({ todos }) => {
     return (
       <Styled.Container>
         <Styled.Main>
-        <Styled.Title color="#3D7E9A">List Todos</Styled.Title>
+    <Styled.Title color="#3D7E9A">List Todos</Styled.Title>
         <Styled.Todos>
         <Table>
           <Thead>
@@ -71,8 +118,8 @@ export const Todos: React.FC<GetTodosProps> = ({ todos }) => {
              todo && ( 
              <Tr key={todo.id}>
               <Td>{todo.text}</Td>
-              <Td><Styled.EditIcon /></Td>
-              <Td><Styled.DeleteIcon onClick={() => handleClick(todo)} /></Td>
+              <Td><Styled.EditIcon onClick={() => handleEditClick(todo)} /></Td>
+              <Td><Styled.DeleteIcon onClick={() => handleDeleteClick(todo)} /></Td>
             </Tr>
             )
           )}
@@ -81,19 +128,26 @@ export const Todos: React.FC<GetTodosProps> = ({ todos }) => {
         </Styled.Todos>
         </Styled.Main>
         <Modal
-         title='Delete Todo'
-         show={todoToDelete && todoToDelete.id !== '' ? true : false}
-         handleCloseClick={() => setTodoToDelete(initialTodoTodel)}
+         title={modalTitle}
+         show={showModal}
+         handleCloseClick={() => handleDeleteClick(initialTodoTodel)}
         >
+          {todoToDelete && todoToDelete.id !== '' ? 
           <DeleteTodo
-           handleCancelClick={() => setTodoToDelete(initialTodoTodel)}
+           handleCancelClick={() => handleDeleteClick(initialTodoTodel)}
            handleConfirmDelete={handleConfirmDelete}
-           delMessage={delMessage}
-           />
+           delMessage={message}
+           />  :
+           todoToEdit && todoToEdit.id !== '' ? 
+           <EditTodo
+           todo={todoToEdit}
+           handleChange={e => handleChange(e)}
+           handleSubmit={e => handleEditSubmit(e)}
+           />  : '' }
         </Modal>
-        {delMessage && 
+        {message && 
         <Styled.MessageDiv>
-    <Styled.MessageInner><Styled.Message>{delMessage}</Styled.Message></Styled.MessageInner>
+    <Styled.MessageInner><Styled.Message>{message}</Styled.Message></Styled.MessageInner>
         </Styled.MessageDiv>
        }
       </Styled.Container>

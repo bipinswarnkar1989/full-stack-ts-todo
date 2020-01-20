@@ -13,3 +13,11 @@ mutation deleteTodo($id: String!) {
        isComplete
     }
 }
+
+mutation editTodo($id: String!, $text: String!) {
+    updateTodoText(id: $id, text: $text){
+       id
+       text
+       isComplete
+    }
+}

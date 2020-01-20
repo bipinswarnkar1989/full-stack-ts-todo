@@ -81,6 +81,17 @@ export type DeleteTodoMutation = { __typename?: "Mutation" } & {
   >;
 };
 
+export type EditTodoMutationVariables = {
+  id: Types.Scalars["String"];
+  text: Types.Scalars["String"];
+};
+
+export type EditTodoMutation = { __typename?: "Mutation" } & {
+  updateTodoText: Types.Maybe<
+    { __typename?: "Todo" } & Pick<Types.Todo, "id" | "text" | "isComplete">
+  >;
+};
+
 export const GetTodosDocument = gql`
   query getTodos {
     todos {
@@ -153,4 +164,37 @@ export type DeleteTodoMutationResult = ApolloReactCommon.MutationResult<
 export type DeleteTodoMutationOptions = ApolloReactCommon.BaseMutationOptions<
   DeleteTodoMutation,
   DeleteTodoMutationVariables
+>;
+export const EditTodoDocument = gql`
+  mutation editTodo($id: String!, $text: String!) {
+    updateTodoText(id: $id, text: $text) {
+      id
+      text
+      isComplete
+    }
+  }
+`;
+export type EditTodoMutationFn = ApolloReactCommon.MutationFunction<
+  EditTodoMutation,
+  EditTodoMutationVariables
+>;
+
+export function useEditTodoMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    EditTodoMutation,
+    EditTodoMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    EditTodoMutation,
+    EditTodoMutationVariables
+  >(EditTodoDocument, baseOptions);
+}
+export type EditTodoMutationHookResult = ReturnType<typeof useEditTodoMutation>;
+export type EditTodoMutationResult = ApolloReactCommon.MutationResult<
+  EditTodoMutation
+>;
+export type EditTodoMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  EditTodoMutation,
+  EditTodoMutationVariables
 >;
