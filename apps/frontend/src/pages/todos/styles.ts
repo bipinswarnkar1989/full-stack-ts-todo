@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.section`
    color: ${props => props.theme.color};
@@ -46,5 +47,14 @@ export const EditIcon = styled(FaEdit)`
 export const DeleteIcon = styled(FaTrash)`
    cursor: pointer;
    color: #AA2B2B;
+`;
+
+export const NavLink = styled(Link)`
+   text-decoration: none;
+   color: #0366D6;
+
+   :hover{
+      color: #FF6600;
+   }
 `;
 

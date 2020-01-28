@@ -103,19 +103,6 @@ export type EditTodoMutation = (
   )> }
 );
 
-export type TodoQueryQueryVariables = {
-  id: Types.Scalars['String']
-};
-
-
-export type TodoQueryQuery = (
-  { __typename?: 'Query' }
-  & { todo: Types.Maybe<(
-    { __typename?: 'Todo' }
-    & Pick<Types.Todo, 'text' | 'isComplete'>
-  )> }
-);
-
 
 export const GetTodosDocument = gql`
     query getTodos {
@@ -170,21 +157,3 @@ export type EditTodoMutationFn = ApolloReactCommon.MutationFunction<EditTodoMuta
 export type EditTodoMutationHookResult = ReturnType<typeof useEditTodoMutation>;
 export type EditTodoMutationResult = ApolloReactCommon.MutationResult<EditTodoMutation>;
 export type EditTodoMutationOptions = ApolloReactCommon.BaseMutationOptions<EditTodoMutation, EditTodoMutationVariables>;
-export const TodoQueryDocument = gql`
-    query TodoQuery($id: String!) {
-  todo(id: $id) {
-    text
-    isComplete
-  }
-}
-    `;
-
-    export function useTodoQueryQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<TodoQueryQuery, TodoQueryQueryVariables>) {
-      return ApolloReactHooks.useQuery<TodoQueryQuery, TodoQueryQueryVariables>(TodoQueryDocument, baseOptions);
-    }
-      export function useTodoQueryLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<TodoQueryQuery, TodoQueryQueryVariables>) {
-        return ApolloReactHooks.useLazyQuery<TodoQueryQuery, TodoQueryQueryVariables>(TodoQueryDocument, baseOptions);
-      }
-      
-export type TodoQueryQueryHookResult = ReturnType<typeof useTodoQueryQuery>;
-export type TodoQueryQueryResult = ApolloReactCommon.QueryResult<TodoQueryQuery, TodoQueryQueryVariables>;
