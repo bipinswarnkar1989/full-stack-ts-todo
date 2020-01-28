@@ -21,11 +21,3 @@ mutation editTodo($id: String!, $text: String!) {
        isComplete
     }
 }
-
-
-query TodoQuery($id: String!){
-    todo(id: $id){
-      text
-      isComplete
-    }
-}

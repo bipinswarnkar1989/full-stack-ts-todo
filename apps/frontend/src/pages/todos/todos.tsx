@@ -119,7 +119,7 @@ export const Todos: React.FC<GetTodosProps> = ({ todos }) => {
           {todos && todos.map(todo => 
              todo && ( 
              <Tr key={todo.id}>
-              <Td>{todo.text}</Td>
+              <Td><Styled.NavLink to={`/view-todo/${todo.id}`} >{todo.text}</Styled.NavLink></Td>
               <Td><Styled.EditIcon onClick={() => handleEditClick(todo)} /></Td>
               <Td><Styled.DeleteIcon onClick={() => handleDeleteClick(todo)} /></Td>
             </Tr>
