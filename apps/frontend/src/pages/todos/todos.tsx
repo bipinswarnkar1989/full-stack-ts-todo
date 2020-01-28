@@ -5,10 +5,12 @@ import { GetTodosQuery as GetTodosProps, useDeleteTodoMutation, Todo, GetTodosDo
 import { Table, Thead, TBody, Tr, Td } from '../../components/table';
 import { Modal } from '../../components/modal';
 import { DeleteTodo, EditTodo } from './components';
+import { AddButton } from '../add-todo/components/add-button';
+import { Message } from '../../components/message';
 
 type TodoProps =  Todo;
 
-const initialTodoTodel = {id: '', text: '', isComplete: false};
+export const initialTodoTodel = {id: '', text: '', isComplete: false};
 
 export const Todos: React.FC<GetTodosProps> = ({ todos }) => {
     const [todoToDelete, setTodoToDelete] = useState<TodoProps>(initialTodoTodel);
@@ -146,10 +148,9 @@ export const Todos: React.FC<GetTodosProps> = ({ todos }) => {
            />  : '' }
         </Modal>
         {message && 
-        <Styled.MessageDiv>
-    <Styled.MessageInner><Styled.Message>{message}</Styled.Message></Styled.MessageInner>
-        </Styled.MessageDiv>
+        <Message message={message} />
        }
+       <AddButton />
       </Styled.Container>
     )
 }
